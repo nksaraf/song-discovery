@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+ <head>
+
+   <meta charset="UTF-8">
+   <title>Song Discovery</title>
+   <script src="https://d3js.org/d3.v4.min.js"></script>
+
+   <script
+   src="https://code.jquery.com/jquery-2.2.4.min.js"
+   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+   crossorigin="anonymous">
+   </script>
+
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700" rel="stylesheet">
+
+ </head>
+
+ <body onscroll="handle_scroll()">
+
+<!-- HEADER -->
+
+   <header>
+     <div>How <span>to</span><br>Discover Songs.</div>
+     <div class="subtitle"><i>By Michael Gingras, Kat Bau, and Nikhil Saraf (CS 3300 Final Project)</i></div>
+      <div id="js-welcome" style="float: right;"><button id="js-login">login</button></div>
+    </header>
+
+     <section id='s1'>
+       <p>
+        Our project uses k-means clustering to show how similar music is through
+         statistical modeling. We use k-means clustering to predict whether a person
+         will like a song dependent on certain criteria that the user can input by
+         clustering it with an existing base playlist of new finds. We were able to use
+         the spotify api to pull information about songs and want to use it to recommend
+         songs to users through interaction - they can play with the dimensionals used,
+          the number of clusters involved in the k-means clustering, and can
+         personally add their own playlists or songs by logging in above. If they do not want to personally add music,
+         they can still learn a lot more about the k-means clustering process
+         through the interactive web page and browse music by hovering over the
+         existing data. If you do not have a spotify account, you can one created
+         for this visualization. The username is <span>3300testaccount</span> and
+         the password is <span>csinfo3300.</span>
+       </p>
+
+       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 788.4 39.4" style="enable-background:new 0 0 788.4 39.4;" xml:space="preserve">
+       <style type="text/css">
+         .st0{fill:none;stroke:#00BE44;stroke-width:2;}
+       </style>
+       <path id="path-17" class="st0" d="M0,17.5c18.5,0,18.5,4.5,37.1,4.5c18.5,0,18.5-4.5,37.1-4.5c13.1,0,17.1,1.5,24.5,3.5
+         c7.1,1.9,12.6,3.3,21,3.6c8.9,0.3,14.6-2.3,21.6-7.8c2.2-1.8,4.8-3.1,7.3-3.1c7.6,0,7.6,11.9,15.2,11.9s7.6-11.9,15.2-11.9
+         s7.6,11.9,15.2,11.9s7.6-11.9,15.2-11.9s10.1,13.9,22.6,13.6C245.2,27.1,243.2,8,254.7,8c10.9,0.4,8.9,23.4,17.8,23.4
+         S281.4,8,290.3,8s8.9,23.4,17.8,23.4S317.1,8,326,8s8.9,23.4,17.8,23.4S352.7,8,361.6,8s12.5,26.6,21.3,27
+         c14.2,0.6,13.5-33.2,26.7-33.2s15,35.8,24.5,35.8S444.3,6,454.1,6s9.8,27.4,19.5,27.4c9.8,0,9.8-27.4,19.5-27.4
+         c9.8,0,9.8,27.4,19.5,27.4c9.8,0,9.8-27.4,19.5-27.4c9.8,0,9.8,27.4,19.5,27.4c9.8,0,11.6-27.4,19.5-27.4s8.2,21.4,16.5,21.4
+         c8.2,0,8.2-15.4,16.5-15.4c8.2,0,8.2,15.4,16.5,15.4c8.2,0,8.2-15.4,16.5-15.4c8.2,0,8.2,15.4,16.5,15.4c8.2,0,8.2-15.4,16.5-15.4
+         c8.2,0,8.2,15.4,16.5,15.4c8.2,0,8.4-13,19-13.2c11-0.2,11.7,7,21.9,7s10.2-3,20.3-3c10.2,0,10.2,3,20.3,3s10.2-3,20.3-3"/>
+       </svg>
+     </section>
+
+
+  <section class="flex-container" style="justify-content: space-between;">
+    <div class="left">
+
+    <div class="dim_options prose">
+
+       <h4 class="prose__title">Step 1: Dimensions</h4>
+
+       <p class = "prose_text">
+            Plot our base playlist against two dimensions! The default dimensions are
+            <span style = "color:#00BE44">Energy</span> and <span style = "color:#00BE44">Danceability</span>.
+            <span style ="font-weight:bold">To choose your own dimensionals - unclick the existing ones and choose two new ones to the right! </span>
+
+      </p>
+
+       <p class = "prose_text"> <span style="font-weight:bold">Danceability:</span> Suitability for dancing.<br>
+            <span style="font-weight:bold">Energy:</span> Intensity and Energy<br>
+            <span style="font-weight:bold">Acousticness:</span> Measure of track's acousticness<br>
+            <span style="font-weight:bold">Speechiness:</span> Amount of spoken words<br>
+            <span style="font-weight:bold">Instrumentalness:</span> Lack of Vocals<br>
+            <span style="font-weight:bold">Valence:</span> Music positiveness conveyed<br><br>
+
+
+      </p>
+
+        <h4 class= "prose__title">Step 2: K Clusters </h4>
+        <p class = "prose_text">
+        Choose the number of clusters you would like the songs to cluster in - our default value is 4 clusters.
+        <span style ="font-weight:bold">To choose your own number of clusters - use the drop down menu to the right above the graph!</span>
+        </p>
+
+        <p class = "continue-scroll">
+          Continue Scrolling
+        </p>
+
+      </div>
+
+
+      <div class="prose">
+        <h4 class='prose__title'>Creating clusters</h4>
+        <p class="prose__text">Clustering or cluster analysis is grouping a set of objects in a way that the
+        objects in the same cluster are more similar to each other than to the other
+        objects in other groups. K-Means Clustering is a popular
+        method of clustering in which data is partitioned into k
+        clusters, where a piece of data belongs to a cluster with the nearest mean that
+        is the “prototype” of the cluster. The mean is called the “centroid”. K-means
+        clustering works by doing two major steps. The first step is having each point
+        assigned to a cluster centroid. Each centroid is then recomputed to averaging
+        the points that were assigned to it. These two steps are repeated until the
+        algorithm “converges” and the centroids stop moving.</p>
+
+         <p class = "continue-scroll">
+          Continue Scrolling
+        </p>
+      </div>
+
+      <div class="prose">
+        <h4 class="prose__title">Nudging the centroids</h4>
+        <p class="prose__text">Sometimes the centroids need to be nudged. Each data point is assigned to a centroid and the centroid will be recomputed, "nudged", based on the average of the data points in its cluster. </p>
+
+         <p class = "continue-scroll">
+          Continue Scrolling
+        </p>
+
+      </div>
+
+
+      <div class="prose">
+        <h4 class="prose__title">Testing the data</h4>
+        <p class="prose__text">In order to determine your music taste, we need to
+        classify your music into the defined clusters. If you logged in below, your
+        playlists should be shown below. Click one to add the entire playlist to the
+        graph. If you would perfer to add individual songs, use the search bar.
+        Either option will work, but the more data you enter, the better the results
+        will be.</p>
+        <label for="js-results" style="margin-left: 0px; font-size: 20px;">Songs</label>
+        <br>
+        <input type="text" id="js-search-song" data-id="1" placeholder="Search">
+        <br>
+
+        <div id="js-results"></div>
+
+        <label for="js-show-playlists" style="margin-left: 0px; font-size: 20px;">Playlists</label>
+
+        <div id="js-show-playlists">
+        </div>
+
+      </div>
+
+
+      <div class="prose" style="height: 700px">
+        <h4 class="prose__title">Recommending songs</h4>
+        <p class="prose__text">Songs you like are in the same cluster. We should write more about this. </p>
+        <button class="btn-large" id="js-recommend" onclick="countClusters()">Recommend</button>
+        <div id="js-recommended"></div>
+
+      </div>
+
+    </div>
+
+    <div class="right">
+      <div class="option-container">
+
+        <label for="k_dropdown">K Value:</label>
+        <select id="k_dropdown">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option selected="selected" value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+
+        <input type="checkbox" id="danceability" class="js-dimension" checked="true" onclick="updateDimensions(this)">
+        <label for="danceability">Danceability</label>
+
+        <input type="checkbox" id="energy" class="js-dimension" checked="true" onclick="updateDimensions(this)">
+        <label for="energy">Energy</label>
+
+        <input type="checkbox" id="acousticness" class="js-dimension inactive" onclick="updateDimensions(this)" disabled="true">
+        <label for="acousticness">Acousticness</label>
+
+
+        <input type="checkbox" id="speechiness" class="js-dimension inactive" onclick="updateDimensions(this)" disabled="true">
+        <label for="speechiness">Speechiness</label>
+
+        <input type="checkbox" id="instrumentalness" class="js-dimension inactive" onclick="updateDimensions(this)" disabled="true">
+        <label for="instrumentalness">Instrumentalness</label>
+
+        <input type="checkbox" id="valence" class="js-dimension inactive" onclick="updateDimensions(this)" disabled="true">
+        <label for="valence">Valence</label>
+
+
+        </div>
+      <p id='p1'>
+      </p>
+
+    </div>
+  </section>
+
+  <div class="tooltip"></div>
+
+    <!-- JS -->
+        <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script src="assets/js/kmeans.js"></script>
+    <script src="assets/js/spotify.js"></script>
+
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBAnQKPP7BqOGYeVbiRo1nVpUvkDgIsoPE",
+      authDomain: "songdiscovery582.firebaseapp.com",
+      databaseURL: "https://songdiscovery582.firebaseio.com",
+      projectId: "songdiscovery582",
+      storageBucket: "",
+      messagingSenderId: "992172694496"
+    };
+    firebase.initializeApp(config);
+
+    var songData,
+      xScale,
+      yScale,
+      default_playlist_id = "52aflwuKxyBUy2U6F3dN9G",
+      default_params = ["danceability", "energy"],
+      default_playlist,
+      default_k = 4,
+      default_loaded = false,
+      steps,
+      current_step = -2,
+      dimension_list,
+      k,
+      doc_height = $(document).height(),
+      offset_main = $('.right').offset().top,
+      offset_right,
+      anim_height = doc_height - offset_main - $(window).height(),
+      scroll_factor,
+      clusters;
+      colors = ["#AF2B97", "#EC1F33", "#F59B25", "#4A927C", "#2D47BA", "#7C4B32", "#1A1414"];
+      maxstep = 100;
+
+
+    $("#js-search-song").keyup(function() {
+        var query = $(this).val();
+        searchSongs(query);
+      });
+
+    $(document).ready(function() {
+        if (isAuth()) {
+          getUser();
+          getPlaylists();
+        }
+        k = $('#k_dropdown').val();
+        dimension_list = ['danceability', 'energy'];
+        defaultPlaylist(default_playlist_id, dimension_list, k);
+      });
+
+    $(document).on('click', '#js-song-link', function() {
+        var id = $(this).data('id');
+        getSingleAudioData(id,dimension_list,k);
+      });
+
+    $(document).on('click', '#js-playlist-link', function() {
+        var id = $(this).data('id');
+        var owner = $(this).data('owner');
+        showSongs(owner, id, dimension_list, k);
+      });
+
+
+    // D3 D3 D3 D3 D3
+    var margin = {
+        top    : 20,
+        right  : 20,
+        bottom : 30,
+        left   : 40
+      },
+      width  = 700 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
+
+
+    var s1 = d3.select("#p1")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .attr('class', 'svg1')
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    xScale = d3.scaleLinear()
+      .domain([0, 1])
+      .range([0, width]);
+
+    yScale = d3.scaleLinear()
+      .domain([0, 1])
+      .range([height, 0]);
+
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+
+    // appending y axis
+    s1.append("g")
+      .call(yAxis)
+      .attr("transform", "translate(0,0)")
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".7em")
+      .style("text-anchor", "end")
+      .text("energy")
+      .attr('class', 'y-axis')
+      .attr("fill", "#1A1414");
+
+    // appending x axis
+    s1.append("g")
+      .call(xAxis)
+      .attr("transform", "translate(" + 0 + "," + height + ")")
+      .append("text")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("danceability")
+      .attr('class', 'x-axis')
+      .attr("fill", "#1A1414");
+
+    s1.append("g")
+      .attr("class", "songs");
+    s1.append("g")
+      .attr("class", "centroids");
+
+    offset_right = ($(window).width() - ($('.right').offset().left + $('.right').outerWidth()))
+
+    function defaultPlaylist(id, params, k) {
+      if (playlists.indexOf(id) == -1) {
+        playlists.push(id);
+        d3.queue()
+          .defer(d3.json, "assets/data/songs_" + id + ".json")
+          .defer(d3.json, "assets/data/audio_features_" + id + ".json")
+          .await(function(error, songs_list, playlist) {
+            for (var i = 0; i < playlist.length; i++) {
+              playlist[i].recommended = false;
+              playlist[i].name = songs_list[i].name;
+              playlist[i].artist = songs_list[i].artists[0].name;
+              playlist[i].playback_url = songs_list[i].preview_url;
+              playlist[i].user_data = false;
+              default_playlist = playlist.slice();
+            }
+            updateClusters(playlist, params, k);
+            drawEmpty();
+          });
+      }
+    }
+
+    function drawEmpty() {
+      playlist = clusters.steps[0].contents;
+      var tooltip = d3.select("div.tooltip");
+      var songs_g = s1.select("g.songs");
+      var circles_songs = songs_g.selectAll("circle")
+        .data(playlist);
+      var es = circles_songs.enter()
+        .append("circle")
+        .attr("fill-opacity", "0.6") //needs fill for tooltip
+      circles_songs.merge(es)
+        .attr("cx", function(song) { return xScale(song[song.params[0]]); })
+        .attr("cy", function(song) { return yScale(song[song.params[1]]); })
+        .on("mouseover", function() { return tooltip.style("visibility","visible"); })
+        .attr("stroke", "#4d4d4d")
+        .attr("fill", function(song) {
+          if(song.user_data) {return "#4d4d4d"; }
+          else { return "#FFFFFF"; }
+        })
+        .attr("stroke-width", function(song) {
+          if(song.recommended) {return "2";}
+          else {return "1";}
+        })
+        .attr("r", function(song) {
+          if(song.recommended) {return "4";}
+          else {return "3";}
+        })
+        .on("mousemove", function(song) {
+          var content = song.name + " by " + song.artist;
+          for (var i = 0; i < song.params.length; i++) {
+            content += "<br> " + song.params[i] + ": " + song[song.params[i]];
+          }
+          return tooltip.style("top", (d3.event.pageY - 10) + "px")
+            .style("left", (d3.event.pageX + 10) + "px")
+            .style("background-color", "black")
+            .html(content);
+        })
+        .on("mouseout", function() {
+          return tooltip.style("visibility", "hidden");
+        });
+      circles_songs.exit().remove();
+      $('g.centroids').empty();
+      current_step++;
+    }
+
+    function clusterify() {
+      k = $('#k_dropdown').val();
+      if (k != clusters.steps[0].centroids.length ||
+              !listEquals(dimension_list, clusters.steps[0].contents[0].params)) {
+          updateClusters(clusters, dimension_list, k)
+      }
+      if(current_step == -2) {
+        drawEmpty();
+      }
+      else {
+          if (current_step < steps-1) {
+              current_step++;
+              drawClusters(current_step);
+            }
+        }
+    }
+
+    function updateDimensions(t) {
+      var checkboxes = $('.js-dimension');
+      var dimensions = checkboxes.filter(function() { return $(this).prop('checked') });
+
+      // if we select two dimensions then we need to lock the others.
+      if (dimensions.length == 2){
+        var non_dimensions = checkboxes.filter(function() { return !$(this).prop('checked') });
+        dimension_list = dimensions.map(function() { return $(this).attr('id') });
+        $.each(non_dimensions, function() {
+          $(this).addClass('inactive');
+          $(this).attr('disabled', true);
+        });
+      }
+
+      // if the checks go below two then we can open up again.
+      else if (dimensions.length < 2){
+        $('.inactive').attr('disabled',false);
+        $('.inactive').removeClass('inactive');
+      }
+
+      //change axis labels
+      $('.x-axis').text(dimension_list[0]);
+      $('.y-axis').text(dimension_list[1]);
+
+      clusterify();
+      drawEmpty();
+    }
+
+    /* count clusters
+     returns the ID of the cluster with the highest amount user overlap.
+    */
+    function countClusters() {
+      var recommended_ids = [];
+      $('.rec-song').remove();
+      var maxCluster = 0;
+      var maxID = 0;
+      for (var i = 0; i < k; i++) {
+        var c = $('.testID'+i);
+        var count = c.length;
+        if (count > maxCluster) {
+          maxCluster = count;
+          maxID = i;
+        }
+      }
+
+      var org_songs  = $('.trainID'+maxID); // original songs from max cluster
+      var length = org_songs.length;
+      for(var i = 0; i < clusters.steps[0].contents.length; i++) {
+        clusters.steps[0].contents[i].recommended = false;
+      }
+
+      for (var i = 0; i < 3; i++) {
+        var rand  = Math.floor(Math.random() * (length-1)); // might get same
+        if(recommended_ids.indexOf(rand) > -1) { rand = rand + 1;}
+        var track  = org_songs[rand];
+        var url    = $(track).data('url');
+        var song   = $(track).data('name');
+        var artist = $(track).data('artist');
+        var index = $(track).data('index');
+        clusters.steps[0].contents[index].recommended = true;
+        recommended_ids.push(rand);
+        $('#js-recommended').before('<p id="js-play-song" class="rec-song" data-url='+url+'>'+song+' by ' +artist+'</p>');
+      }
+      drawClusters(current_step);
+    }
+
+    /**
+    * AUDIO FUNCTIONS ~---
+    */
+    $(document).on('click', "#js-play-song", function(){
+      var url = $(this).data('url');
+      if($(this).hasClass("js-paused")){
+        audioObject.play();
+        $(".js-paused").addClass("js-playing");
+        $(".js-paused").removeClass("js-paused");
+      }
+       else if($(this).hasClass('js-playing')){
+         audioObject.pause();
+         console.log('this is playing right now');
+         $(".js-playing").addClass("js-paused");
+         $(".js-playing").removeClass("js-playing");
+       }
+       else if($('.js-playing').length > 0){
+         audioObject.pause();
+         $(".js-playing").removeClass("js-playing");
+         $(".js-paused").removeClass('js-paused');
+         audioObject = new Audio(url);
+         audioObject.play();
+         $(this).addClass('js-playing');
+       }
+       else{
+       audioObject = new Audio(url);
+       audioObject.pause();
+        $(".js-paused").removeClass('js-paused');
+       audioObject.play();
+       $(this).addClass("js-playing");
+       audioObject.addEventListener('ended', function () {
+            $(this).removeClass("js-playing");
+        });
+      }
+    });
+
+    function handle_scroll() {
+      var scroll_top = $(window).scrollTop();
+      if(scroll_top > offset_main) {
+        $('.right').addClass('is_sticky');
+        $('.is_sticky').css('right', offset_right);
+        new_step = Math.floor((scroll_top - offset_main) / scroll_factor);
+        if(scroll_top - offset_main < 50) {
+          drawEmpty();
+        } else if(new_step != current_step)
+        {
+          if(new_step == null) {
+            new_step = -1;
+          }
+          current_step = new_step -1;
+          clusterify();
+        }
+      } else {
+        $('.right').removeClass('is_sticky');
+          drawEmpty();
+        }
+      }
+
+      var updateClusters = function(data, params, k) {
+        if (clusters == null) {
+          clusters = kmeans(data, params, k, maxstep);
+        } else {
+          if(data instanceof Array) {
+            clusters.clustergroup.addObjects(data);
+          } else {
+            clusters.clustergroup.addObject(data);
+          }
+          var cluster_data = clusters.steps[clusters.steps.length - 1].contents;
+          var centroids = clusters.steps[clusters.steps.length - 1].centroids;
+          if (k != centroids.length || !listEquals(cluster_data[0].params, params)) {
+            clusters = kmeans(cluster_data, params, k, maxstep);
+          } else {
+            clusters = run(clusters.clustergroup, maxstep);
+          }
+        }
+
+        steps = clusters.steps.length;
+        scroll_factor = anim_height / steps;
+        current_step = 0;
+        console.log(clusters);
+      }
+
+      var drawClustersAllSteps = function() {
+        var i = 0,
+          howManyTimes = clusters.steps.length;
+
+        function animateCentroid() {
+          drawClusters(i);
+          i++;
+          if (i < howManyTimes) {
+            setTimeout(animateCentroid, 1000);
+          }
+        }
+        animateCentroid();
+      }
+
+      $('#k_dropdown').on('change', function(){
+        clusterify();
+      });
+
+    </script>
+    </body>
+</html>

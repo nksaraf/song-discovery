@@ -1,0 +1,210 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: 'Roboto';
+  margin: 0 10%;
+}
+
+div {
+  padding: 10px 0;
+}
+
+p{
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 28px;
+  margin-bottom: 10px;
+}
+
+header{
+  width: 100%;
+  color: #1A1414;
+  border-bottom: 1px solid #EFEFEF;
+  font-size: 36px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+section{
+  width: 100%;
+  margin: 20px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+svg{
+  display: block;
+  background-color: #FFFFFF;
+}
+
+button {
+  width: 100px;
+  height: 40px;
+  border-radius: 40px;
+  color: white;
+  background-color: #00BE44;
+  border: none;
+  font-size: 14px;
+  display: block;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+button:hover{
+  background-color: #00DC4D;
+}
+
+input[type="checkbox"] {
+	opacity: 0;
+	width: 0;
+  height: 0;
+}
+
+input[type="checkbox"] + label {
+  height: 12px;
+  line-height: 12px;
+  border-radius: 2px;
+  padding: 4px;
+  font-size: 12px;
+  margin: 5px;
+}
+
+input[type="checkbox"]:not(:checked) + label {
+  opacity: 1;
+  border: 1px solid #999999;
+  color: #1A1414;
+}
+
+input[type="checkbox"]:checked + label {
+  opacity: 1;
+  background-color: #00BE44;
+  border: 1px solid #00BE44;
+  color: white;
+}
+
+#k_dropdown{
+  margin-right: 5px;
+}
+
+#k_dropdown, label{
+  padding-top: 5px;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.option-container{
+  width: 660px;
+  float: right;
+}
+
+.inactive + label{
+  background-color: #eaeaea;
+}
+
+header div{
+  display: inline;
+}
+
+
+header span{
+  color: #00BE44;
+}
+
+.subtitle{
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.flex-container{
+  display: flex;
+  margin: auto;
+}
+
+
+.text-center{
+  text-align: center;
+}
+
+.tooltip{
+  position: absolute;
+  visibility: hidden;
+  color: white;
+  font-size: 12px;
+  background-color: black;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.query-result{
+  margin-bottom: 0px;
+  line-height: 14px;
+
+}
+
+.query-result:hover{
+  cursor: pointer;
+  color: #999999;
+}
+
+.is_sticky {
+  position: fixed;
+  top: 0;
+}
+
+
+
+.left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.options {
+  width: 100%;
+}
+
+.dim_options .input {
+  display: block;
+}
+
+#js-show-playlists{
+  overflow: scroll;
+  max-height: 200px;
+}
+
+.right {
+  padding-top: 20px;
+}
+
+.prose{
+  height: 1500px;
+}
+
+.rec-song:hover{
+  cursor: pointer;
+  color: #999999;
+}
+
+.prose__title{
+  font-size: 32px;
+  color: #1A1414;
+  border-bottom: 2px solid #1A1414;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.continue-scroll{
+  margin: 50px;
+  font-weight:bold;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.js-playing{
+  color: #999999;
+}
